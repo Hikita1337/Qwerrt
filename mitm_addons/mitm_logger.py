@@ -1,4 +1,5 @@
-from mitmproxy import http, websocket
+from mitmproxy import http
+from mitmproxy.proxy.websocket import WebSocketFlow
 import os
 import time
 import base64
@@ -39,13 +40,13 @@ class MITMLogger:
         save_file(f"{DUMP_DIR}/responses/{ts}_meta.txt", meta.encode())
 
     # WEBSOCKET CONNECT
-    def websocket_handshake(self, flow: websocket.WebSocketFlow):
+    def websocket_handshake(self, flow: WebSocketFlow):
         ts = int(time.time() * 1000)
         text = f"WS CONNECT: {flow.server_conn.address}\nURL: {flow.request.url}\n\n{flow.request.headers}"
         save_file(f"{DUMP_DIR}/ws/{ts}_connect.txt", text.encode())
 
     # WEBSOCKET MESSAGE IN → SAVE
-    def websocket_message(self, flow: websocket.WebSocketFlow):
+    def websocket_message(self, flow: WebSocketFlow):
         ts = int(time.time() * 1000)
         for msg in flow.messages:
             direction = "IN" if msg.from_server else "OUT"
