@@ -1,8 +1,7 @@
 {
-  "name": "MITM Dump",
+  "name": "mitmproxy-dump",
   "image": "mcr.microsoft.com/devcontainers/python:3.10",
-  "features": {},
-  "postCreateCommand": "pip install -r requirements.txt",
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -10,5 +9,15 @@
         "ms-python.vscode-pylance"
       ]
     }
+  },
+
+  "postCreateCommand": "pip install -r requirements.txt",
+
+  "forwardPorts": [
+    8080
+  ],
+
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
   }
 }
